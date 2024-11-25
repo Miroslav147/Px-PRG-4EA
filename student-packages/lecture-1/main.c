@@ -2,38 +2,54 @@
 #include "pico/stdlib.h"
 
 #define LED_PIN 6
-#define BLINK_DELAY_MS 500
-#define BLINK_DELAY_MSM 1500
+#define DOT_DELAY_MS 200
+#define DASH_DELAY_MS 600
+#define SYMBOL_SPACE_DELAY_MS 200
+#define LETTER_SPACE_DELAY_MS 600
+#define WORD_SPACE_DELAY_MS 3000
 
-
-gpio_init(LED_PIN);
-gpio_set_dir(LED_PIN, GPIO_OUT);
-
-
-void pomlcka()
+void blink_dot()
 {
     gpio_put(LED_PIN, 1);
-    sleep_ms(BLINK_DELAY_MSM);
-
-    // Turn off the LED
+    sleep_ms(DOT_DELAY_MS);
     gpio_put(LED_PIN, 0);
-    sleep_ms(BLINK_DELAY_MSM);
+    sleep_ms(SYMBOL_SPACE_DELAY_MS);
 }
 
-void tecka()
+void blink_dash()
 {
     gpio_put(LED_PIN, 1);
-    sleep_ms(BLINK_DELAY_MS);
-
-    // Turn off the LED
+    sleep_ms(DASH_DELAY_MS);
     gpio_put(LED_PIN, 0);
-    sleep_ms(BLINK_DELAY_MS);
-    
+    sleep_ms(SYMBOL_SPACE_DELAY_MS);
 }
 
 int main()
 {
-    
-    }
-  
+    // Initialize GPIO pins
+    gpio_init(LED_PIN);
+    gpio_set_dir(LED_PIN, GPIO_OUT);
 
+    // Infinite loop
+    while (1)
+    {
+        // Blink S (dot dot dot)
+        blink_dot();
+        blink_dot();
+        blink_dot();
+        sleep_ms(LETTER_SPACE_DELAY_MS);
+
+        // Blink O (dash dash dash)
+        blink_dash();
+        blink_dash();
+        blink_dash();
+        sleep_ms(LETTER_SPACE_DELAY_MS);
+
+        // Blink S (dot dot dot)
+        blink_dot();
+        blink_dot();
+        blink_dot();
+        sleep_ms(WORD_SPACE_DELAY_MS);
+    }
+    return 0;
+}
